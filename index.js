@@ -1,18 +1,44 @@
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
 const axios = require('axios');
 
-function triggerWebsite() {
-  // Replace the URL with the website you want to trigger
-  const websiteURL = 'https://jrytdl.netlify.app/';
+const app = express()
 
-  // Make a GET request using axios
-  axios.get(websiteURL)
-    .then(response => {
-      console.log('Website triggered successfully.');
-    })
-    .catch(error => {
-      console.error('Error triggering website. Error:', error.message);
-    });
+const CorsOptions = {
+    origin: '*',
+    credential: true,
+    optionSuccessStatus: 200,
 }
 
-// Trigger the website every 10 minutes (600,000 milliseconds)
+app.use(cors(CorsOptions))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.get('/',(req,res)=>{
+    res.send("Home")
+})
+
+function triggerWebsite() {
+    const websiteURL = 'https://jrytdl.netlify.app/';
+    axios.get(websiteURL)
+      .then(response => {
+        console.log('Website triggered successfully.');
+      })
+      .catch(error => {
+        console.error('Error triggering website. Error:', error.message);
+      });
+  }
 setInterval(triggerWebsite, 600000);
+
+
+const port = 4000
+const server = app.listen(port, () => {
+    console.log(`Backend Run on Port: ${port}`)
+})
+
+
+
+
+
+
