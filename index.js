@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/',(req,res)=>{
-    res.send("Home")
+    res.send("Home")  
 })
 
 function triggerWebsite() {
@@ -29,12 +29,13 @@ function triggerWebsite() {
         console.error('Error triggering website. Error:', error.message);
       });
   }
-setInterval(triggerWebsite, 600000);
+
 
 
 const port = 4000
 const server = app.listen(port, () => {
     console.log(`Backend Run on Port: ${port}`)
+    setInterval(triggerWebsite, 600000);
 })
 
 
